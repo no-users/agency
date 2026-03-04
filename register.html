@@ -246,17 +246,17 @@
     };
 
     // --- ASLI REGISTRATION LOGIC ---
-    async function handleRegister(e) {
+   async function handleRegister(e) {
     e.preventDefault();
     const btn = document.getElementById('submitBtn');
     
-    // File check
+    // File elements
     const photoFile = document.getElementById('photo_file').files[0];
     const adhaarFile = document.getElementById('adhaar_file').files[0];
     const panFile = document.getElementById('pan_file').files[0];
 
     if(!photoFile || !adhaarFile || !panFile) {
-        alert("Bhai, teeno documents select karna zaroori hai!");
+        alert("Bhai, teeno documents (Selfie, Aadhaar, PAN) select karna zaroori hai!");
         return;
     }
 
@@ -269,16 +269,19 @@
         const userEmail = `${mobile}@apnaagency.com`;
 
         // 1. Auth Creation
+        console.log("Step 1: Creating Auth User...");
         const userCredential = await createUserWithEmailAndPassword(auth, userEmail, password);
         const user = userCredential.user;
+        console.log("Auth Success: UID is", user.uid);
 
         btn.innerText = "Uploading Photos...";
 
         // 2. Storage Upload Utility
         const uploadDoc = async (file, folder) => {
+            console.log(`Step 2: Starting upload for ${folder}...`);
             const sRef = ref(storage, `${folder}/${user.uid}_${file.name}`);
-            console.log(`Starting upload: ${folder}`);
             const snapshot = await uploadBytes(sRef, file);
+            console.log(`${folder} Uploaded! Getting URL...`);
             return await getDownloadURL(snapshot.ref);
         };
 
@@ -287,23 +290,28 @@
         const panURL = await uploadDoc(panFile, 'pan_cards');
 
         btn.innerText = "Saving Data...";
+        console.log("Step 3: Saving to Firestore...");
 
         // 3. Firestore Save
         await setDoc(doc(db, "agents", user.uid), {
             uid: user.uid,
             fullName: document.getElementById('fullName').value,
+            shopName: document.getElementById('shopName').value,
             mobile: mobile,
+            adhaar: document.getElementById('adhaar').value,
+            pan: document.getElementById('pan').value,
             photoURL, adhaarURL, panURL,
             status: "Pending",
             wallet_balance: 0,
             createdAt: serverTimestamp()
         });
 
-        alert("✅ Success! Admin verify karega.");
+        console.log("All Steps Done! ✅");
+        alert("✅ Mubarak ho! Registration successfully ho gaya.");
         window.location.href = "landing.html";
 
     } catch (err) {
-        console.error("DEBUG ERROR:", err.code, err.message);
+        console.error("DEBUG ERROR DETAILS:", err.code, err.message);
         alert("❌ Error: " + err.message);
         btn.disabled = false;
         btn.innerText = "Submit Registration";
@@ -317,4 +325,5 @@
     };
 </script>
 </body>
+
 </html>
