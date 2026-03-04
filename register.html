@@ -311,12 +311,12 @@
         window.location.href = "landing.html";
 
     } catch (err) {
-        console.error("DEBUG ERROR DETAILS:", err.code, err.message);
-        alert("❌ Error: " + err.message);
-        btn.disabled = false;
-        btn.innerText = "Submit Registration";
-    }
+    console.error("FULL ERROR OBJECT:", err); // Isse error ka pura detail milega
+    alert("❌ Error: " + err.message);
+    btn.disabled = false;
+    btn.innerText = "Submit Registration";
 }
+   
 
     document.getElementById('registrationForm').addEventListener('submit', handleRegister);
     window.togglePass = () => {
@@ -327,3 +327,4 @@
 </body>
 
 </html>
+
