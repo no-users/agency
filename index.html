@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Apna Agency | India's Elite B2B Fintech Solutions</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap');
+        
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #f8fafc; }
+        .nav-blur { background: rgba(255, 255, 255, 0.8); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); }
+        .indigo-gradient { background: linear-gradient(135deg, #4f46e5 0%, #3730a3 100%); }
+        .text-gradient { background: linear-gradient(135deg, #6366f1 0%, #a855f7 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        
+        /* Premium Shadow and Animation */
+        .premium-card { transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); border: 1px solid rgba(226, 232, 240, 0.8); }
+        .premium-card:hover { transform: translateY(-10px); box-shadow: 0 30px 60px -12px rgba(79, 70, 229, 0.15); border-color: #6366f1; }
+        
+        .mobile-menu-enter { transform: translateX(100%); transition: transform 0.3s ease-in-out; }
+        .mobile-menu-active { transform: translateX(0); }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #f1f5f9; }
+        ::-webkit-scrollbar-thumb { background: #6366f1; border-radius: 10px; }
+    </style>
+</head>
+<body class="antialiased text-slate-900">
+
+    <nav class="fixed top-0 w-full z-[100] nav-blur border-b border-slate-100/50">
+        <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+            <div class="flex items-center space-x-3 group cursor-pointer" onclick="window.scrollTo(0,0)">
+                <div class="w-11 h-11 indigo-gradient rounded-2xl flex items-center justify-center text-white shadow-lg shadow-indigo-200 group-hover:rotate-12 transition-transform duration-300">
+                    <i class="fas fa-rocket text-xl"></i>
+                </div>
+                <span class="text-2xl font-extrabold tracking-tighter">APNA <span class="text-indigo-600">AGENCY</span></span>
+            </div>
+            
+            <div class="hidden lg:flex space-x-10 text-[13px] font-bold uppercase tracking-widest text-slate-500">
+                <a href="#services" class="hover:text-indigo-600 transition">Services</a>
+                <a href="#pricing" class="hover:text-indigo-600 transition">Pricing</a>
+                <a href="#features" class="hover:text-indigo-600 transition">Features</a>
+                <a href="#contact" class="hover:text-indigo-600 transition">Support</a>
+            </div>
+
+            <div class="flex items-center space-x-4">
+                <button onclick="window.location.href='login.html'" class="hidden sm:block text-sm font-bold text-slate-600 hover:text-indigo-600 transition">Login</button>
+                <button onclick="window.location.href='register.html'" class="px-7 py-3 indigo-gradient text-white rounded-2xl font-bold text-sm shadow-xl shadow-indigo-100 hover:scale-105 active:scale-95 transition-all">
+                    Get Started
+                </button>
+                <button class="lg:hidden text-2xl text-slate-700" id="mobileMenuBtn">
+                    <i class="fas fa-bars-staggered"></i>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <div id="sidebar" class="fixed inset-0 z-[110] bg-slate-900/60 backdrop-blur-sm hidden opacity-0 transition-opacity duration-300">
+        <div class="absolute right-0 top-0 h-full w-72 bg-white p-8 shadow-2xl mobile-menu-enter" id="sidebarContent">
+            <button class="text-2xl mb-10" id="closeSidebar"><i class="fas fa-times"></i></button>
+            <div class="flex flex-col space-y-6 font-bold text-lg">
+                <a href="#services" onclick="closeMenu()">Services</a>
+                <a href="#pricing" onclick="closeMenu()">Pricing</a>
+                <a href="#" onclick="toggleLogin()">Login</a>
+                <hr>
+                <a href="register.html" class="text-indigo-600">Register Now</a>
+            </div>
+        </div>
+    </div>
+
+    <section class="pt-48 pb-32 px-6 relative overflow-hidden bg-[radial-gradient(circle_at_top_right,_var(--tw-gradient-stops))] from-indigo-50 via-white to-white">
+        <div class="max-w-7xl mx-auto grid lg:grid-cols-2 gap-20 items-center">
+            <div class="space-y-8 relative z-10">
+                <div class="inline-flex items-center space-x-2 bg-indigo-50 px-4 py-2 rounded-full border border-indigo-100">
+                    <span class="flex h-2 w-2 rounded-full bg-indigo-600 animate-pulse"></span>
+                    <span class="text-xs font-bold text-indigo-600 uppercase tracking-widest">India's Trusted B2B Network</span>
+                </div>
+                <h1 class="text-6xl lg:text-7xl font-black leading-[1.05] text-slate-900 tracking-tight">
+                    Powering The <span class="text-gradient">Digital</span> Future of Retail.
+                </h1>
+                <p class="text-xl text-slate-500 font-medium leading-relaxed max-w-lg">
+                    Turn your shop into a high-earning digital hub with PAN, AEPS, and Recharges. Experience the most reliable settlement system in India.
+                </p>
+                <div class="flex flex-wrap gap-5">
+                    <button onclick="toggleLogin()" class="px-10 py-5 indigo-gradient text-white rounded-[2rem] font-bold text-lg shadow-2xl shadow-indigo-400/30 hover:shadow-indigo-400/50 transition-all flex items-center">
+                        Open Free Account <i class="fas fa-arrow-right ml-3 text-sm"></i>
+                    </button>
+                    <div class="flex items-center p-3 bg-white rounded-3xl border border-slate-100 shadow-sm">
+                        <div class="flex -space-x-3 mr-4">
+                            <img class="w-10 h-10 rounded-full border-4 border-white" src="https://ui-avatars.com/api/?name=R&background=6366f1&color=fff">
+                            <img class="w-10 h-10 rounded-full border-4 border-white" src="https://ui-avatars.com/api/?name=S&background=10b981&color=fff">
+                            <img class="w-10 h-10 rounded-full border-4 border-white" src="https://ui-avatars.com/api/?name=A&background=f59e0b&color=fff">
+                        </div>
+                        <p class="text-xs font-black text-slate-400 uppercase tracking-widest">15k+ Agents <br> Active Daily</p>
+                    </div>
+                </div>
+            </div>
+            <div class="relative group">
+                <div class="absolute -inset-4 bg-indigo-500/10 rounded-[4rem] blur-3xl group-hover:bg-indigo-500/20 transition duration-1000"></div>
+                <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&q=80&w=2026" 
+                     class="relative rounded-[3.5rem] shadow-[0_50px_100px_-20px_rgba(0,0,0,0.15)] border-8 border-white object-cover aspect-video lg:aspect-square transform hover:scale-[1.02] transition-transform duration-700" 
+                     alt="Fintech Dashboard">
+            </div>
+        </div>
+    </section>
+
+    <section id="services" class="py-32 bg-white">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="text-center max-w-3xl mx-auto mb-20">
+                <h2 class="text-5xl font-black text-slate-900 mb-6 tracking-tight">One Portal, <span class="text-indigo-600">Total Control.</span></h2>
+                <p class="text-slate-500 font-semibold text-lg leading-relaxed">Everything you need to grow your shop into a professional digital service center.</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <div class="bg-slate-50 p-10 rounded-[3rem] premium-card">
+                    <div class="w-16 h-16 bg-blue-100 text-blue-600 rounded-2xl flex items-center justify-center text-3xl mb-8">
+                        <i class="fas fa-id-card"></i>
+                    </div>
+                    <h4 class="text-2xl font-bold mb-4">PAN Card</h4>
+                    <p class="text-slate-500 text-sm leading-relaxed font-medium">Digital NSDL & UTI e-KYC services with instant coupon generation and processing.</p>
+                </div>
+                <div class="bg-slate-50 p-10 rounded-[3rem] premium-card">
+                    <div class="w-16 h-16 bg-emerald-100 text-emerald-600 rounded-2xl flex items-center justify-center text-3xl mb-8">
+                        <i class="fas fa-mobile-screen-button"></i>
+                    </div>
+                    <h4 class="text-2xl font-bold mb-4">Recharges</h4>
+                    <p class="text-slate-500 text-sm leading-relaxed font-medium">Get the highest commission on all major Mobile and DTH operators in India.</p>
+                </div>
+                <div class="bg-slate-50 p-10 rounded-[3rem] premium-card">
+                    <div class="w-16 h-16 bg-amber-100 text-amber-600 rounded-2xl flex items-center justify-center text-3xl mb-8">
+                        <i class="fas fa-building-columns"></i>
+                    </div>
+                    <h4 class="text-2xl font-bold mb-4">Banking</h4>
+                    <p class="text-slate-500 text-sm leading-relaxed font-medium">AEPS Cash Withdrawal, Balance Inquiry, and Mini Statement for all banks.</p>
+                </div>
+                <div class="bg-slate-50 p-10 rounded-[3rem] premium-card">
+                    <div class="w-16 h-16 bg-purple-100 text-purple-600 rounded-2xl flex items-center justify-center text-3xl mb-8">
+                        <i class="fas fa-receipt"></i>
+                    </div>
+                    <h4 class="text-2xl font-bold mb-4">Bill Pay</h4>
+                    <p class="text-slate-500 text-sm leading-relaxed font-medium">Safe and instant payments for Electricity, Water, Gas, and Fastag bills.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="pricing" class="py-32 bg-slate-50 px-6">
+        <div class="max-w-7xl mx-auto text-center mb-20">
+            <h2 class="text-5xl font-black text-slate-900 mb-6 tracking-tight">Simple Membership.</h2>
+            <p class="text-slate-500 font-bold uppercase tracking-[0.3em] text-xs">No Monthly Fees. No Hidden Charges.</p>
+        </div>
+        
+        <div class="grid md:grid-cols-3 gap-10 max-w-6xl mx-auto">
+            <div class="bg-white p-12 rounded-[3.5rem] premium-card flex flex-col shadow-xl shadow-slate-200/50">
+                <h3 class="font-black text-slate-400 uppercase tracking-widest text-xs mb-6">Retailer</h3>
+                <div class="text-6xl font-black mb-10 text-slate-900">₹99 <span class="text-sm font-bold text-slate-400 tracking-normal">/ Life Time</span></div>
+                <ul class="space-y-5 mb-12 flex-1 text-sm font-bold text-slate-600">
+                    <li><i class="fas fa-check-circle text-emerald-500 mr-3"></i> Full PAN Access</li>
+                    <li><i class="fas fa-check-circle text-emerald-500 mr-3"></i> Wallet Top-up</li>
+                    <li><i class="fas fa-check-circle text-emerald-500 mr-3"></i> 24/7 Support</li>
+                </ul>
+                <button class="w-full py-5 rounded-3xl border-2 border-indigo-600 text-indigo-600 font-black hover:bg-indigo-600 hover:text-white transition-all">Buy Retailer ID</button>
+            </div>
+
+            <div class="bg-slate-900 p-12 rounded-[3.5rem] shadow-2xl shadow-indigo-300 text-white relative overflow-hidden scale-110 z-10 flex flex-col">
+                <div class="absolute top-8 right-8 bg-indigo-600 px-4 py-1.5 rounded-full text-[10px] font-black uppercase tracking-widest">Most Popular</div>
+                <h3 class="font-black text-indigo-400 uppercase tracking-widest text-xs mb-6">Distributor</h3>
+                <div class="text-6xl font-black mb-10">₹499 <span class="text-sm font-normal text-slate-500 tracking-normal">/ Life Time</span></div>
+                <ul class="space-y-5 mb-12 flex-1 text-sm font-bold text-indigo-100">
+                    <li><i class="fas fa-check-circle text-indigo-400 mr-3"></i> Unlimited Retailer IDs</li>
+                    <li><i class="fas fa-check-circle text-indigo-400 mr-3"></i> High Commission Rank</li>
+                    <li><i class="fas fa-check-circle text-indigo-400 mr-3"></i> RM Dedicated Support</li>
+                </ul>
+                <button class="w-full py-5 rounded-3xl bg-indigo-600 text-white font-black hover:bg-indigo-700 shadow-xl shadow-indigo-900 transition-all">Get Distributor ID</button>
+            </div>
+
+            <div class="bg-white p-12 rounded-[3.5rem] premium-card flex flex-col shadow-xl shadow-slate-200/50">
+                <h3 class="font-black text-slate-400 uppercase tracking-widest text-xs mb-6">Master Partner</h3>
+                <div class="text-6xl font-black mb-10 text-slate-900">₹999 <span class="text-sm font-bold text-slate-400 tracking-normal">/ Life Time</span></div>
+                <ul class="space-y-5 mb-12 flex-1 text-sm font-bold text-slate-600">
+                    <li><i class="fas fa-check-circle text-emerald-500 mr-3"></i> Unlimited Distributors</li>
+                    <li><i class="fas fa-check-circle text-emerald-500 mr-3"></i> Lowest Coupon Rates</li>
+                    <li><i class="fas fa-check-circle text-emerald-500 mr-3"></i> Admin Control Panel</li>
+                </ul>
+                <button class="w-full py-5 rounded-3xl border-2 border-indigo-600 text-indigo-600 font-black hover:bg-indigo-600 hover:text-white transition-all">Buy Super ID</button>
+            </div>
+        </div>
+    </section>
+
+    <footer class="bg-slate-900 text-slate-400 pt-32 pb-16 px-6">
+        <div class="max-w-7xl mx-auto">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-16 mb-20">
+                <div class="col-span-1 md:col-span-1">
+                    <div class="flex items-center space-x-2 mb-8">
+                        <div class="w-10 h-10 bg-indigo-600 rounded-xl flex items-center justify-center text-white font-bold text-xl">A</div>
+                        <span class="text-2xl font-black tracking-tighter text-white">APNA <span class="text-indigo-500">AGENCY</span></span>
+                    </div>
+                    <p class="text-sm leading-relaxed font-medium mb-8">Empowering 15,000+ business owners across India with digital financial tools.</p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="w-12 h-12 bg-slate-800 rounded-2xl flex items-center justify-center hover:bg-indigo-600 hover:text-white transition duration-300"><i class="fab fa-whatsapp"></i></a>
+                        <a href="#" class="w-12 h-12 bg-slate-800 rounded-2xl flex items-center justify-center hover:bg-indigo-600 hover:text-white transition duration-300"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+                <div>
+                    <h4 class="text-white font-black text-xs uppercase tracking-[0.3em] mb-10">Solutions</h4>
+                    <ul class="space-y-4 text-sm font-bold">
+                        <li><a href="#" class="hover:text-indigo-400 transition">NSDL e-KYC</a></li>
+                        <li><a href="#" class="hover:text-indigo-400 transition">AEPS Cash Out</a></li>
+                        <li><a href="#" class="hover:text-indigo-400 transition">Utility Payments</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-white font-black text-xs uppercase tracking-[0.3em] mb-10">Company</h4>
+                    <ul class="space-y-4 text-sm font-bold">
+                        <li><a href="#" class="hover:text-indigo-400 transition">About Us</a></li>
+                        <li><a href="#" class="hover:text-indigo-400 transition">Privacy Policy</a></li>
+                        <li><a href="#" class="hover:text-indigo-400 transition">Terms of Use</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-white font-black text-xs uppercase tracking-[0.3em] mb-10">Security</h4>
+                    <div class="p-6 rounded-3xl bg-slate-800/50 border border-slate-700 space-y-4">
+                        <div class="flex items-center space-x-3 text-[10px] font-black uppercase tracking-widest text-slate-300">
+                            <i class="fas fa-shield-alt text-indigo-500 text-lg"></i>
+                            <span>PCI DSS CERTIFIED</span>
+                        </div>
+                        <div class="flex items-center space-x-3 text-[10px] font-black uppercase tracking-widest text-slate-300">
+                            <i class="fas fa-lock text-indigo-500 text-lg"></i>
+                            <span>SSL ENCRYPTED</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="pt-12 border-t border-slate-800 text-center md:text-left flex flex-col md:flex-row justify-between items-center gap-6">
+                <p class="text-[10px] font-black uppercase tracking-widest">© 2026 APNA AGENCY PRIVATE LIMITED. MADE IN INDIA.</p>
+                <div class="flex items-center space-x-8 opacity-40 grayscale hover:grayscale-0 transition duration-500">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/e/e1/UPI-Logo.png" class="h-4" alt="UPI">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c5/Digital_India_logo.svg/1200px-Digital_India_logo.svg.png" class="h-6" alt="Digital India">
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    
+    </div>
+
+    
+</body>
+</html>

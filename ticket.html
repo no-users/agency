@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Apna PAN Agency - Pro Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/dist/css/all.min.css">
+    <style>
+        .glass { background: rgba(255, 255, 255, 0.7); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.2); }
+        .sidebar-gradient { background: linear-gradient(180deg, #1e293b 0%, #0f172a 100%); }
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+        .active-tab { border-bottom: 3px solid #6366f1; color: #6366f1; font-weight: bold; }
+    </style>
+</head>
+<body class="bg-slate-50 font-sans text-slate-900">
+
+    <div class="flex min-h-screen">
+        <aside class="w-64 sidebar-gradient text-white flex flex-col fixed h-full shadow-2xl">
+            <div class="p-6 text-2xl font-bold border-b border-slate-700">MY PAN <span class="text-indigo-400">AGENCY</span></div>
+            
+            <div class="p-4 mx-4 mt-6 bg-slate-800/50 rounded-xl border border-slate-700 cursor-pointer hover:bg-slate-800 transition-all group" onclick="toggleProfileModal()">
+                <div class="flex items-center space-x-3">
+                    <div class="relative">
+                        <img id="userAvatar" src="https://ui-avatars.com/api/?name=Saurav+Kumar&background=6366f1&color=fff" class="w-12 h-12 rounded-full border-2 border-indigo-500 object-cover">
+                        <div class="absolute -bottom-1 -right-1 bg-emerald-500 h-3 w-3 rounded-full border-2 border-slate-900"></div>
+                    </div>
+                    <div class="flex-1">
+                        <p class="text-xs text-slate-400">Account</p>
+                        <p class="text-sm font-semibold truncate">Saurav Kumar</p>
+                        <span class="text-[10px] text-indigo-300">Setting & KYC <i class="fas fa-external-link-alt ml-1"></i></span>
+                    </div>
+                </div>
+            </div>
+
+            <nav class="flex-1 px-4 mt-6 space-y-2">
+                <a href="#" class="flex items-center p-3 bg-indigo-600 rounded-lg transition-all"><i class="fas fa-th-large mr-3"></i> Dashboard</a>
+                <a href="#" class="flex items-center p-3 hover:bg-slate-800 rounded-lg transition-all"><i class="fas fa-users mr-3"></i> User Manage</a>
+                <a href="#" class="flex items-center p-3 hover:bg-slate-800 rounded-lg transition-all"><i class="fas fa-id-card mr-3"></i> NSDL Services</a>
+                <a href="#" class="flex items-center p-3 hover:bg-slate-800 rounded-lg transition-all"><i class="fas fa-wallet mr-3"></i> Wallet Manage</a>
+                <a href="#support-section" class="flex items-center p-3 hover:bg-slate-800 rounded-lg transition-all"><i class="fas fa-ticket-alt mr-3"></i> Support Ticket</a>
+            </nav>
+
+            <div class="p-4 border-t border-slate-700">
+                <button class="w-full flex items-center justify-center p-3 text-red-400 hover:bg-red-500/10 rounded-lg transition-all">
+                    <i class="fas fa-sign-out-alt mr-2"></i> Logout
+                </button>
+            </div>
+        </aside>
+
+        <main class="flex-1 ml-64 p-8">
+          
+
+            <div id="support-section" class="space-y-8 pb-10">
+                <div class="flex justify-between items-center">
+                    <h2 class="text-2xl font-bold text-slate-800">Support Center</h2>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                    <div class="lg:col-span-1 bg-white p-6 rounded-3xl shadow-sm border border-slate-100">
+                        <h3 class="font-bold mb-6 flex items-center"><i class="fas fa-plus-circle mr-2 text-indigo-600"></i> New Ticket</h3>
+                        <form onsubmit="handleTicketSubmit(event)" class="space-y-4">
+                            <div>
+                                <label class="text-xs font-bold text-slate-500 uppercase">Category</label>
+                                <select id="category" class="w-full p-3 bg-slate-50 border rounded-xl mt-1 outline-none">
+                                    <option>Wallet Issue</option>
+                                    <option>NSDL PAN Service</option>
+                                    <option>UTI Coupon Issue</option>
+                                    <option>GST Support</option>
+                                </select>
+                            </div>
+                            <input type="text" id="subject" placeholder="Subject" class="w-full p-3 bg-slate-50 border rounded-xl outline-none" required>
+                            <div class="border-2 border-dashed p-4 rounded-xl text-center cursor-pointer hover:bg-slate-50" onclick="document.getElementById('attach').click()">
+                                <i class="fas fa-paperclip text-slate-300"></i> <span class="text-xs text-slate-400">Attach Screenshot</span>
+                                <input type="file" id="attach" class="hidden">
+                            </div>
+                            <textarea id="description" rows="3" class="w-full p-3 bg-slate-50 border rounded-xl outline-none" placeholder="Description"></textarea>
+                            <button type="submit" class="w-full py-4 bg-indigo-600 text-white rounded-xl font-bold shadow-lg">Generate Ticket</button>
+                        </form>
+                    </div>
+
+                    <div class="lg:col-span-2 bg-white rounded-3xl shadow-sm border border-slate-100 overflow-hidden">
+                        <div class="p-6 border-b bg-slate-50/50 font-bold">Ticket History</div>
+                        <div class="overflow-x-auto">
+                            <table class="w-full text-left text-sm">
+                                <thead class="bg-slate-50 text-slate-400 text-[10px] uppercase font-bold tracking-widest">
+                                    <tr><th class="px-6 py-4">ID</th><th class="px-6 py-4">Subject</th><th class="px-6 py-4">Status</th><th class="px-6 py-4">Action</th></tr>
+                                </thead>
+                                <tbody id="ticketHistoryBody" class="divide-y divide-slate-50">
+                                    <tr>
+                                        <td class="px-6 py-4 font-bold text-slate-400">#TKT-9901</td>
+                                        <td class="px-6 py-4">NSDL Photo Error</td>
+                                        <td class="px-6 py-4"><span class="bg-orange-100 text-orange-600 px-2 py-1 rounded-full text-[10px] font-bold">In Progress</span></td>
+                                        <td class="px-6 py-4"><button onclick="openChat('#TKT-9901')" class="text-indigo-600 font-bold">View Chat</button></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <div id="profileModal" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white w-full max-w-2xl rounded-3xl shadow-2xl overflow-hidden flex flex-col max-h-[90vh]">
+            <div class="bg-indigo-600 p-6 text-white flex justify-between items-center">
+                <div><h3 class="text-xl font-bold">User Control Center</h3><p class="text-xs text-indigo-200">Manage your profile, security, and KYC</p></div>
+                <button onclick="toggleProfileModal()" class="text-3xl">&times;</button>
+            </div>
+            <div class="flex border-b border-slate-100 bg-slate-50 px-6">
+                <button onclick="switchTab('general')" id="tab-general" class="px-4 py-4 text-sm font-medium transition-all active-tab">General</button>
+                <button onclick="switchTab('security')" id="tab-security" class="px-4 py-4 text-sm font-medium transition-all text-slate-500">Security</button>
+                <button onclick="switchTab('kyc')" id="tab-kyc" class="px-4 py-4 text-sm font-medium transition-all text-slate-500">KYC Status</button>
+                <button onclick="switchTab('bank')" id="tab-bank" class="px-4 py-4 text-sm font-medium transition-all text-slate-500">Bank Details</button>
+            </div>
+            <div class="p-8 overflow-y-auto">
+                <div id="content-general" class="tab-content active space-y-6">
+                    <div class="flex items-center space-x-6 mb-6">
+                        <div class="relative group cursor-pointer" onclick="document.getElementById('profilePicInput').click()">
+                            <img id="modalAvatar" src="https://ui-avatars.com/api/?name=Saurav+Kumar&background=6366f1&color=fff" class="w-20 h-20 rounded-2xl border-4 border-slate-100 object-cover">
+                            <div class="absolute inset-0 bg-black/40 rounded-2xl flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity"><i class="fas fa-camera text-white"></i></div>
+                            <input type="file" id="profilePicInput" class="hidden" onchange="previewAvatar(event)">
+                        </div>
+                        <div><h4 class="font-bold text-lg">Saurav Kumar</h4><p class="text-sm text-slate-500">Retailer ID: PAN998877</p></div>
+                    </div>
+                    <div class="grid grid-cols-2 gap-4">
+                        <div class="space-y-1"><label class="text-xs font-bold text-slate-500">FULL NAME</label><input type="text" value="Saurav Kumar" class="w-full p-3 bg-slate-50 border rounded-xl outline-none"></div>
+                        <div class="space-y-1"><label class="text-xs font-bold text-slate-500">MOBILE NO</label><input type="text" value="+91 9876543210" class="w-full p-3 bg-slate-50 border rounded-xl outline-none"></div>
+                    </div>
+                </div>
+                <div id="content-security" class="tab-content space-y-6">... (Existing Security Code) ...</div>
+            </div>
+            <div class="p-6 border-t bg-slate-50 flex justify-end space-x-3">
+                <button onclick="toggleProfileModal()" class="px-6 py-2.5 text-slate-500 font-semibold">Cancel</button>
+                <button class="px-8 py-2.5 bg-indigo-600 text-white rounded-xl font-bold shadow-lg">Save Changes</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="chatModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-[100] hidden flex items-center justify-center p-4">
+        <div class="bg-white w-full max-w-md rounded-3xl shadow-2xl flex flex-col h-[500px] overflow-hidden">
+            <div class="p-6 bg-indigo-600 text-white flex justify-between items-center">
+                <h4 id="chatTitle" class="font-bold">Chat Support</h4>
+                <button onclick="closeChat()" class="text-2xl">&times;</button>
+            </div>
+            <div class="flex-1 p-6 bg-slate-50 overflow-y-auto" id="chatMessages">
+                <div class="bg-white p-3 rounded-xl shadow-sm text-sm inline-block max-w-[80%]">Hi! Our agent will assist you in 2-4 hours.</div>
+            </div>
+            <div class="p-4 bg-white border-t flex space-x-2">
+                <input type="text" placeholder="Type..." class="flex-1 bg-slate-100 p-2 rounded-lg outline-none">
+                <button class="bg-indigo-600 text-white px-4 rounded-lg">Send</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // PROFILE FUNCTIONS
+        function toggleProfileModal() { document.getElementById('profileModal').classList.toggle('hidden'); }
+        function switchTab(tabName) {
+            document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+            document.querySelectorAll('[id^="tab-"]').forEach(b => b.classList.remove('active-tab', 'text-slate-500'));
+            document.getElementById('content-' + tabName).classList.add('active');
+            document.getElementById('tab-' + tabName).classList.add('active-tab');
+        }
+        function previewAvatar(event) {
+            const reader = new FileReader();
+            reader.onload = function() { 
+                document.getElementById('modalAvatar').src = reader.result;
+                document.getElementById('userAvatar').src = reader.result;
+            }
+            reader.readAsDataURL(event.target.files[0]);
+        }
+
+        // TICKET FUNCTIONS
+        function handleTicketSubmit(event) {
+            event.preventDefault();
+            const id = "#TKT-" + Math.floor(1000 + Math.random() * 9000);
+            const subject = document.getElementById('subject').value;
+            alert(`✅ Ticket Generated: ${id}\n🕒 ETA: 2-4 Hours. WhatsApp notification sent!`);
+            
+            const row = `<tr>
+                <td class="px-6 py-4 font-bold text-slate-400">${id}</td>
+                <td class="px-6 py-4">${subject}</td>
+                <td class="px-6 py-4"><span class="bg-amber-100 text-amber-600 px-2 py-1 rounded-full text-[10px] font-bold">Pending</span></td>
+                <td class="px-6 py-4"><button onclick="openChat('${id}')" class="text-indigo-600 font-bold">View</button></td>
+            </tr>`;
+            document.getElementById('ticketHistoryBody').insertAdjacentHTML('afterbegin', row);
+            event.target.reset();
+        }
+
+        function openChat(id) { 
+            document.getElementById('chatTitle').innerText = "Chat " + id; 
+            document.getElementById('chatModal').classList.remove('hidden'); 
+        }
+        function closeChat() { document.getElementById('chatModal').classList.add('hidden'); }
+    </script>
+</body>
+</html>

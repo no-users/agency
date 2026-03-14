@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Elite Hub | Secured Pro</title>
+    
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #f1f5f9; font-size: 14px; }
+        
+        /* 🔒 Hide content until Auth is verified */
+        #mainWrapper { display: none; opacity: 0; transition: opacity 0.5s ease; }
+        
+        .sidebar-dark { background: #0f172a; width: 240px; }
+        .glass-card { background: white; border: 1px solid #e2e8f0; }
+        #loaderScreen { position: fixed; inset: 0; background: white; display: flex; flex-direction: column; align-items: center; justify-content: center; z-index: 99999; }
+        
+        @keyframes marquee { 0% { transform: translateX(100%); } 100% { transform: translateX(-100%); } }
+        .marquee-text { display: inline-block; animation: marquee 20s linear infinite; white-space: nowrap; }
+    </style>
+</head>
+<body class="min-h-screen flex overflow-x-hidden">
+
+    <div id="loaderScreen">
+        <div class="w-10 h-10 border-4 border-slate-100 border-t-indigo-600 rounded-full animate-spin"></div>
+        <p class="mt-4 text-[10px] font-black text-slate-400 uppercase tracking-widest">Checking Security...</p>
+    </div>
+
+    <div id="mainWrapper" class="flex w-full">
+        <aside class="sidebar-dark text-slate-400 flex flex-col fixed h-full z-50">
+            <div class="p-6 border-b border-slate-800 flex items-center space-x-2">
+                <div class="w-8 h-8 bg-indigo-600 rounded-lg flex items-center justify-center text-white"><i class="fas fa-shield-check"></i></div>
+                <span class="text-lg font-black text-white tracking-tighter uppercase italic">APNA <span class="text-indigo-500">PRO</span></span>
+            </div>
+
+            <nav class="flex-1 px-3 mt-6 space-y-1 overflow-y-auto">
+                <a href="#" class="bg-indigo-600 text-white flex items-center p-3 rounded-xl font-bold text-xs"><i class="fas fa-th-large mr-3"></i> Dashboard</a>
+                <p class="text-[9px] font-black uppercase text-slate-600 tracking-widest ml-3 mt-4 mb-1">Services</p>
+                <a href="#" class="flex items-center p-3 hover:bg-slate-800 hover:text-white rounded-xl font-bold text-xs transition-all"><i class="fas fa-university mr-3 w-4 text-indigo-400"></i> Banking</a>
+                <a href="#" class="flex items-center p-3 hover:bg-slate-800 hover:text-white rounded-xl font-bold text-xs transition-all"><i class="fas fa-bolt mr-3 w-4 text-amber-400"></i> Smart Meter</a>
+            </nav>
+
+            <div class="p-4 border-t border-slate-800">
+                <div class="flex items-center space-x-2 mb-4">
+                    <img id="userAvatar" src="" class="w-8 h-8 rounded-lg border border-indigo-500">
+                    <div class="overflow-hidden">
+                        <p id="userNameDisplay" class="text-[11px] font-black text-white truncate">Loading...</p>
+                        <p id="userIdDisplay" class="text-[9px] font-bold text-slate-500 uppercase">ID: 00000000</p>
+                    </div>
+                </div>
+                <button onclick="handleLogout()" class="w-full py-2 bg-red-500/10 text-red-500 rounded-lg font-black text-[10px] uppercase hover:bg-red-500 hover:text-white transition-all">Sign Out</button>
+            </div>
+        </aside>
+
+        <main class="flex-1 ml-[240px]">
+            <div class="bg-indigo-600 text-white py-1.5 overflow-hidden">
+                <div class="marquee-text font-bold text-[10px] uppercase tracking-widest">
+                    🚀 SECURE SESSION ACTIVE | Instant settlements enabled. | 🎉 New commission slab live!
+                </div>
+            </div>
+
+            <div class="p-6 lg:p-8 text-left">
+                <header class="flex justify-between items-center mb-8">
+                    <div>
+                        <h1 class="text-2xl font-black text-slate-900 tracking-tight">Command Center</h1>
+                        <p class="text-slate-400 font-bold uppercase text-[9px] tracking-widest">Secured B2B Portal</p>
+                    </div>
+                </header>
+
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
+                    <div class="md:col-span-2 glass-card p-5 rounded-2xl border-l-4 border-indigo-600 relative overflow-hidden">
+                        <div class="flex justify-between">
+                            <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest">Wallet Balance</p>
+                            <button onclick="toggleBalance()" class="text-slate-300 hover:text-indigo-600"><i id="eyeIcon" class="fas fa-eye text-sm"></i></button>
+                        </div>
+                        <div class="flex justify-between items-end mt-2">
+                            <h2 id="walletBalance" class="text-3xl font-black text-slate-900 tracking-tighter">₹0.00</h2>
+                            <button class="px-4 py-2 bg-indigo-600 text-white rounded-lg font-black text-[10px] uppercase shadow-md">Add Money</button>
+                        </div>
+                    </div>
+                    </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        const firebaseConfig = {
+            apiKey: "AIzaSyBWyMJvt0OpejwkFEstI_NQToHmMBGwkbE",
+            authDomain: "agency-136b6.firebaseapp.com",
+            projectId: "agency-136b6",
+            storageBucket: "agency-136b6.firebasestorage.app",
+            messagingSenderId: "503663950718",
+            appId: "1:503663950718:web:8a30b18039c279ffac112f"
+        };
+        firebase.initializeApp(firebaseConfig);
+        const auth = firebase.auth();
+        const db = firebase.firestore();
+
+        let realBalance = 0;
+        let isHidden = false;
+
+        // 🛡️ SECURITY GUARD: Auth Listener
+        auth.onAuthStateChanged(async (user) => {
+            const loader = document.getElementById('loaderScreen');
+            const wrapper = document.getElementById('mainWrapper');
+
+            if (user) {
+                try {
+                    // Fetch data using the user's email
+                    const snapshot = await db.collection("partners").where("email", "==", user.email).get();
+                    
+                    if (!snapshot.empty) {
+                        const data = snapshot.docs[0].data();
+                        realBalance = data.wallet || 0;
+                        
+                        // ✅ Map Data
+                        document.getElementById('userNameDisplay').innerText = data.name;
+                        document.getElementById('userIdDisplay').innerText = "ID: " + data.userId;
+                        document.getElementById('walletBalance').innerText = "₹" + realBalance.toFixed(2);
+                        document.getElementById('userAvatar').src = `https://ui-avatars.com/api/?name=${data.name}&background=6366f1&color=fff&bold=true`;
+
+                        // 🔓 Reveal Page
+                        loader.style.display = "none";
+                        wrapper.style.display = "flex";
+                        setTimeout(() => { wrapper.style.opacity = "1"; }, 50);
+                    } else {
+                        // Logged in but no record (might be Admin email mismatch)
+                        alert("Database Record Missing for: " + user.email);
+                        await auth.signOut();
+                        window.location.replace("login.html");
+                    }
+                } catch (err) { console.error(err); }
+            } else {
+                // 🔒 NOT LOGGED IN: Redirect to login
+                window.location.replace("login.html");
+            }
+        });
+
+        async function handleLogout() {
+            if(confirm("Logout from secure session?")) {
+                await auth.signOut();
+                window.location.replace("login.html");
+            }
+        }
+
+        function toggleBalance() {
+            const bal = document.getElementById('walletBalance');
+            const icon = document.getElementById('eyeIcon');
+            isHidden = !isHidden;
+            bal.innerText = isHidden ? "₹ • • • •" : "₹" + realBalance.toFixed(2);
+            icon.className = isHidden ? 'fas fa-eye-slash text-sm' : 'fas fa-eye text-sm';
+        }
+    </script>
+</body>
+</html>
